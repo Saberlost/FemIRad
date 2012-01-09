@@ -1,6 +1,7 @@
 module(..., package.seeall)
 
-gameboardgroup = nil
+local gameboardpane = nil -- Hold everything 
+local gameboardgroup = nil -- holds the cross and circle
 
 
 allcc = 1
@@ -28,8 +29,10 @@ local gameover = 0
 local undobutton = nil
 local drawfunctions = require("drawfunctions")
 
+local playingbackground = nil
 
-local gameboardgroup = nil -- This is the group that contains all cross and circles. So that we can move them around
+
+
 local lasteventid = nil
 local lastsquareid = nil
 local startsquareid = nil
@@ -154,14 +157,14 @@ end
 
 local function gameWon(player)
     local i = 0
-    while i < boardwidth do
-	    local j =0
-	    while j < boardheight do
-	        tableAll[i][j][1].isVisible = false
-	        j = j +1
-	    end
-	    i = i +1
-	end
+--    while i < boardwidth do
+	--    local j =0
+	  --  while j < boardheight do
+	    --    tableAll[i][j][1].isVisible = false
+	      --  j = j +1
+	    --end
+	    --i = i +1
+	--end
 	for index = 1, allcc-1, 1 do 
         local parent = allcrossandcircles[index].parent
         parent:remove(allcrossandcircles[index])
@@ -172,7 +175,8 @@ local function gameWon(player)
     
     currentturnxross.isVisible = false
 	currentturncircle.isVisible = false
-	undobutton.isVisible = false
+	--undobutton.isVisible = false
+	gameboardpane.isVisible = false
     gameover = 1
     winningplayer = player.player
 end
@@ -415,8 +419,9 @@ function drawSquare(x1,y1,x2,y2, i , j)
     end
     tableAll[i][j] = {}
     tableAll[i][j][1] = myRectangle
-    tableAll[i][j][1].isVisible = false
+    --tableAll[i][j][1].isVisible = false
     tableAll[i][j][2] = 0
+	gameboardpane:insert(myRectangle)
     
 end
 
@@ -445,10 +450,11 @@ local function undoLastMove(event)
 end
 
 function newGame()
+  gameboardpane.isVisible = true
   gameboardgroup.x = 0
   gameboardgroup.y = 0
   lastplacedforunto = nil
-  undobutton.isVisible = true
+  --undobutton.isVisible = true
   turnphase  =1 
   
   tableGameBoardPlacement = nil
@@ -503,6 +509,9 @@ end
 
 function init() 
     print("HEJ")
+	gameboardpane= display.newGroup()
+	gameboardpane.isVisible = false
+	
 
     for i = 0, boardwidth-1, 1 do
 	    --local x1 = 1+i*((display.contentWidth-2)/(boardwidth))
@@ -514,9 +523,16 @@ function init()
 	        drawSquare(x1, y1, squareWidth, squareHeight, i, j)
 	    end
     end
-    gameboardgroup  = display.newGroup()
     
-    local bottomimagetest = display.newImage("bgtest2.png", 0,(boardheight) * squareHeight, true) 
+	playingbackground = display.newImage("playingbackground.jpg",0,0)
+	gameboardpane:insert(playingbackground)
+	gameboardgroup  = display.newGroup()
+	gameboardpane:insert(gameboardgroup)
+	
+	
+	
+    
+    --local bottomimagetest = display.newImage("bgtest2.png", 0,(boardheight) * squareHeight, true) 
     currentturnxross  = drawfunctions.drawCross(30, (boardheight) * squareHeight,squareWidth+30, (boardheight +1 )*squareHeight, 0, 0)
     currentturncircle = drawfunctions.drawCirlce(squareWidth/2 +30, (boardheight) * squareHeight +squareHeight/2, 0, 0)
     currentturnxross.isVisible = false
@@ -526,7 +542,11 @@ function init()
     undobutton.x = display.contentWidth/2
     undobutton.y = displayboardheight+ squareHeight/2
     undobutton:addEventListener("touch", undoLastMove)
-    undobutton.isVisible = false
+	
+	gameboardpane:insert(undobutton)
+	--gameboardgroup:insert(
+    --undobutton.isVisible = false
+	
     
     Runtime:addEventListener("touch", removePreview)
     return gameboardgroup

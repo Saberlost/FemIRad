@@ -17,7 +17,7 @@ restartbutton = nil
 
 crossScore = 0
 circleScore = 0
-playerwontext = nil
+playerwon = nil
 currentscoreText = nil
 crossScoreText = nil
 circleScoreText = nil
@@ -35,26 +35,27 @@ local function gameWon(player)
 
 
   
-    titleText.isVisible = true
+    --titleText.isVisible = true
 	--scorebord.isVisible =     true
     restartbutton.isVisible = true
     
     if player.player == 1 then
 	         
-	    playerwontext = display.newText("Circle Wins!!", 100, 100, native.systemFont, 72)
-        playerwontext:setTextColor(255, 255, 255)
+	    playerwon = display.newImage("CircleWins.png", 120, display.contentHeight *0.7)
+
         circleScore = circleScore +1 
 	elseif player.player == 2 then  
-	     playerwontext = display.newText("Cross Wins!!", 100, 100, native.systemFont, 72)
-         playerwontext:setTextColor(255, 255, 255)
+	     playerwon = display.newImage("CrossWins.png", 120, display.contentHeight *0.7)
          crossScore = crossScore +1
     end
-    local textscore = string.format("Current score")
-    currentscoreText = display.newText(textscore, 100, 700, native.systemFont, 48)
-    local text1 = string.format("Cross:%d", crossScore)
-    crossScoreText = display.newText(text1, 100, 750, native.systemFont, 48)
-    local text2 = string.format("Circle:%d", circleScore)
-    circleScoreText = display.newText(text2, 100, 800, native.systemFont, 48)
+    --local textscore = string.format("Current score")
+    --currentscoreText = display.newText(textscore, 100, 800, native.systemFont, 48)
+    --local text1 = string.format("Cross:%d", crossScore)
+	local text1 = string.format("%d", crossScore)
+    crossScoreText = display.newText(text1, 350, 455, native.systemFont, 50)
+    --local text2 = string.format("Circle:%d", circleScore)
+	local text2 = string.format("%d", circleScore)
+    circleScoreText = display.newText(text2, 350, 525, native.systemFont, 50)
 
 end
 
@@ -62,7 +63,7 @@ end
 
 
 local function newGame()
-	titleText.isVisible = false
+	--titleText.isVisible = false
 	
 	gameboard.newGame()
 	gamerunning = 1
@@ -82,14 +83,14 @@ local function restartGame(event)
 	    print (allcc)
 	    
 	   
-     	local parent = playerwontext.parent
-     	parent:remove(playerwontext)
+     	local parent = playerwon.parent
+     	parent:remove(playerwon)
      	parent:remove(circleScoreText) -- should be same parent
      	parent:remove(crossScoreText)
-     	parent:remove(currentscoreText)
+     	--parent:remove(currentscoreText)
      	circleScoreText = nil
      	crossScoreText = nil
-     	playerwontext = nil
+     	playerwon = nil
      	currentscoreText = nil
      	
      	
@@ -120,7 +121,7 @@ end
 print ("STart")
 
 display.setStatusBar(display.HiddenStatusBar)
-myImage = display.newImage("background4.png", true)
+myImage = display.newImage("luffar1.png", true)
 --myImage = display.newImage("Bigstock_7108049.jpg", true)
 --myImage = display.newImage("Bigstock_908845.jpg", true)
 --myImage = display.newImage("Bigstock_11951336.jpg", true)
@@ -139,17 +140,17 @@ Runtime:addEventListener("touch", checkAnyoneWin)
 
 startbutton = ui.newButton{default = "startbuttonRed.png", over = "startbuttonRedOver.png", id = "startbutton", text= "New Local Game", size = 40, emboss = true}
 startbutton.x = display.contentWidth /2
-startbutton.y = display.contentHeight /2
+startbutton.y = display.contentHeight - display.contentHeight /4
 startbutton:addEventListener("touch", startGame)
 
 --local titletext1 = string.format("Fem I Rad")
 --titleText = display.newText(titletext1, 100, 140, native.Zapfino, 32)
-titleText = display.newImage("Title.png", 0, 175, true)
+--titleText = display.newImage("Title.png", 0, 175, true)
 
 
 restartbutton = ui.newButton{default = "buttonRed.png", over = "buttonRedOver.png", id = "undobutton", text= "Restart", size = 40, emboss = true}
 restartbutton.x = display.contentWidth /2
-restartbutton.y = display.contentHeight /2
+restartbutton.y = display.contentHeight - display.contentHeight /6
 restartbutton:addEventListener("touch", restartGame)
 --scorebord.isVisible = false
 restartbutton.isVisible = false
