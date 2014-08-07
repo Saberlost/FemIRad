@@ -31,6 +31,7 @@ local drawfunctions = require("drawfunctions")
 
 local playingbackground = nil
 
+local myRectangle = nil
 
 
 local lasteventid = nil
@@ -407,8 +408,8 @@ end
 function drawSquare(x1,y1,x2,y2, i , j)
     local myRectangle = display.newRect(x1, y1, x2, y2)
     myRectangle.strokeWidth = 2
-    myRectangle:setStrokeColor(0, 0, 0,0)
-    myRectangle:setFillColor(0, 0, 0, 0)
+    myRectangle:setStrokeColor(255, 255, 255)
+    myRectangle:setFillColor(0, 0, 0,1)
     myRectangle:addEventListener("touch", drawInSquare)
     myRectangle:addEventListener("touch", moveGameboard)
     myRectangle.xPos = i
@@ -419,9 +420,9 @@ function drawSquare(x1,y1,x2,y2, i , j)
     end
     tableAll[i][j] = {}
     tableAll[i][j][1] = myRectangle
-    --tableAll[i][j][1].isVisible = false
+    tableAll[i][j][1].isVisible = true	
     tableAll[i][j][2] = 0
-	gameboardpane:insert(myRectangle)
+    gameboardpane:insert(myRectangle)
     
 end
 
@@ -485,6 +486,7 @@ end
 
 
 local function removePreview(event)
+	print("removePreview")
    if (event.phase == "ended") then
        if (lastpreviewdraw ~= nil ) then
            local lastparent = lastpreviewdraw.parent
@@ -512,7 +514,10 @@ function init()
 	gameboardpane= display.newGroup()
 	gameboardpane.isVisible = false
 	
-
+	
+	--Add background before adding "squares", so that you can see the borders.
+	 playingbackground = display.newImage("playingbackground.jpg",0,0)
+    gameboardpane:insert(playingbackground)
     for i = 0, boardwidth-1, 1 do
 	    --local x1 = 1+i*((display.contentWidth-2)/(boardwidth))
 	    local x1 = 1 + i* squareWidth
@@ -521,11 +526,12 @@ function init()
 	        local y1 = 1+j*squareHeight
 	    
 	        drawSquare(x1, y1, squareWidth, squareHeight, i, j)
+	       
 	    end
     end
     
-	playingbackground = display.newImage("playingbackground.jpg",0,0)
-	gameboardpane:insert(playingbackground)
+  
+	 
 	gameboardgroup  = display.newGroup()
 	gameboardpane:insert(gameboardgroup)
 	
@@ -542,6 +548,10 @@ function init()
     undobutton.x = display.contentWidth/2
     undobutton.y = displayboardheight+ squareHeight/2
     undobutton:addEventListener("touch", undoLastMove)
+	
+	
+
+	
 	
 	gameboardpane:insert(undobutton)
 	--gameboardgroup:insert(
