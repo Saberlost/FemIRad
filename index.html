@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fem i Rad - Five in a Row</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="title-screen" class="screen">
+            <img src="Title.png" alt="Fem i Rad" class="title-image">
+            <button id="start-button" class="button">New Local Game</button>
+        </div>
+        
+        <div id="game-screen" class="screen hidden">
+            <canvas id="game-canvas"></canvas>
+            <div id="game-controls">
+                <div id="turn-indicator">
+                    <div id="turn-cross" class="turn-symbol hidden">✕</div>
+                    <div id="turn-circle" class="turn-symbol hidden">◯</div>
+                </div>
+                <button id="undo-button" class="button small-button">UNDO</button>
+            </div>
+        </div>
+        
+        <div id="win-screen" class="screen hidden">
+            <img id="win-image" src="" alt="Winner" class="win-image">
+            <div id="score-display">
+                <div class="score-item">
+                    <span class="score-label">✕:</span>
+                    <span id="cross-score">0</span>
+                </div>
+                <div class="score-item">
+                    <span class="score-label">◯:</span>
+                    <span id="circle-score">0</span>
+                </div>
+            </div>
+            <button id="restart-button" class="button">Restart</button>
+        </div>
+    </div>
+    
+    <script src="drawfunctions.js"></script>
+    <script src="gameboard.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
