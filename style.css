@@ -1,0 +1,179 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+#game-container {
+    width: 100%;
+    max-width: 480px;
+    height: 100vh;
+    max-height: 800px;
+    background: url('background4.png');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Title Screen */
+#title-screen {
+    background: url('Luffar1.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.title-image {
+    max-width: 80%;
+    margin-bottom: 50px;
+}
+
+/* Buttons */
+.button {
+    background: url('buttonRed.png');
+    background-size: cover;
+    border: none;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 20px 40px;
+    cursor: pointer;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    transition: transform 0.1s;
+    min-width: 200px;
+    min-height: 60px;
+}
+
+.button:hover {
+    background: url('buttonRedOver.png');
+    background-size: cover;
+    transform: scale(1.05);
+}
+
+.button:active {
+    transform: scale(0.95);
+}
+
+.small-button {
+    font-size: 20px;
+    padding: 15px 30px;
+    min-width: 150px;
+    min-height: 50px;
+}
+
+/* Game Screen */
+#game-screen {
+    background: url('playingbackground.jpg');
+    background-size: cover;
+    background-position: center;
+    justify-content: flex-start;
+    padding-top: 10px;
+}
+
+#game-canvas {
+    border: 2px solid #fff;
+    cursor: pointer;
+    touch-action: none;
+    image-rendering: crisp-edges;
+}
+
+#game-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#turn-indicator {
+    display: flex;
+    gap: 20px;
+    font-size: 48px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.turn-symbol {
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+#turn-cross {
+    color: #00ffff;
+}
+
+#turn-circle {
+    color: #ffff00;
+}
+
+/* Win Screen */
+#win-screen {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.win-image {
+    max-width: 60%;
+    margin-bottom: 30px;
+}
+
+#score-display {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+    font-size: 50px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.score-item {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.score-label {
+    font-weight: bold;
+}
+
+#cross-score {
+    color: #00ffff;
+}
+
+#circle-score {
+    color: #ffff00;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    #game-container {
+        max-width: 100%;
+    }
+}
