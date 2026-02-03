@@ -134,6 +134,10 @@ class GameBoard {
         this.isDragging = false;
     }
 
+    getPlayer() {
+        return (this.turnPhase % 2) + 1;
+    }
+
     placePiece(x, y) {
         const i = Math.floor(x / this.squareWidth) + this.xPosOffset;
         const j = Math.floor(y / this.squareHeight) + this.yPosOffset;
@@ -150,7 +154,7 @@ class GameBoard {
         }
         
         // Place piece
-        const player = (this.turnPhase % 2) + 1;
+        const player = this.getPlayer();
         this.tableGameBoardPlacement[i][j] = player;
         
         this.lastPlacedForUndo = {
@@ -257,7 +261,7 @@ class GameBoard {
         const { x, y } = this.lastPlacedForUndo;
         delete this.tableGameBoardPlacement[x][y];
         this.lastPlacedForUndo = null;
-        this.turnPhase++;
+        this.turnPhase--;
         this.draw();
         
         return true;
@@ -328,6 +332,6 @@ class GameBoard {
     }
 
     getCurrentPlayer() {
-        return (this.turnPhase % 2) + 1;
+        return this.getPlayer();
     }
 }
