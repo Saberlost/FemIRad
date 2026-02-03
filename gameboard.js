@@ -33,6 +33,9 @@ class GameBoard {
         this.gameOver = false;
         this.winningPlayer = 0;
         
+        // Callbacks
+        this.onTurnChangeCallback = null;
+        
         // Touch/mouse tracking
         this.isDragging = false;
         this.lastMouseX = 0;
@@ -105,8 +108,8 @@ class GameBoard {
             const moveY = Math.round(deltaY / this.squareHeight);
             
             // Update offsets with constraints
-            this.xPosOffset = this.constrainOffset(this.boardStartX - moveX, this.minX, this.maxX, this.boardWidth);
-            this.yPosOffset = this.constrainOffset(this.boardStartY - moveY, this.minY, this.maxY, this.boardHeight);
+            this.xPosOffset = this.constrainOffset(this.boardStartX + moveX, this.minX, this.maxX, this.boardWidth);
+            this.yPosOffset = this.constrainOffset(this.boardStartY + moveY, this.minY, this.maxY, this.boardHeight);
             
             this.draw();
         }
@@ -165,6 +168,11 @@ class GameBoard {
         
         this.updateGameBoardMaxs(i, j);
         this.turnPhase++;
+        
+        // Notify turn change
+        if (this.onTurnChangeCallback) {
+            this.onTurnChangeCallback();
+        }
         
         // Lock board briefly to prevent accidental double-placement
         this.boardLocked = true;

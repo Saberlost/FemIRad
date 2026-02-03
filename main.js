@@ -41,6 +41,7 @@ class Game {
         if (!this.gameBoard) {
             this.gameBoard = new GameBoard(this.canvas, this.boardWidth, this.boardHeight);
             this.gameBoard.onWinCallback = (winner) => this.handleWin(winner);
+            this.gameBoard.onTurnChangeCallback = () => this.updateTurnIndicator();
         }
         
         this.gameBoard.newGame();
